@@ -40,9 +40,11 @@ jobs:
           path: coverage/
           retention-days: 7
 
+  # PR 上只做编译验证（不需要签名密钥等 secrets）
   build-android:
     name: Android Build
     runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -77,3 +79,50 @@ jobs:
           name: app-debug
           path: android/app/build/outputs/apk/debug/*.apk
           retention-days: 7
+
+  # push 到 main：lint 通过后自动构建签名 release 并分发到 Firebase App Distribution
+  distribute:
+    name: Firebase Distribution
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.event_name == 'push'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Gradle cache
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Install dependencies
+        run: npm ci # postinstall 会自动应用 patch-package 补丁
+
+      - name: Restore signing key
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > android/tosleep-release.keystore
+          echo "${{ secrets.KEYSTORE_PROPERTIES_BASE64 }}" | base64 -d > android/keystore.properties
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.4'
+          bundler-cache: true
+          working-directory: android
+
+      - name: Distribute to Firebase
+        working-directory: android
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          RELEASE_NOTES: ${{ github.event.head_commit.message }}
+        run: bundle exec fastlane distribute

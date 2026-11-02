@@ -21,7 +21,8 @@ platform :android do
   lane :distribute do |options|
     gradle(task: "assemble", build_type: "Release")
 
-    release_notes = options[:notes] || "ToSleep 测试版本 #{Time.now.strftime('%Y-%m-%d %H:%M')}"
+    release_notes = options[:notes] || ENV["RELEASE_NOTES"] ||
+                    "ToSleep 测试版本 #{Time.now.strftime('%Y-%m-%d %H:%M')}"
 
     firebase_app_distribution(
       app: FIREBASE_APP_ID,

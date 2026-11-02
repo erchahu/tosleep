@@ -1,0 +1,2 @@
+# fastlane 插件清单，由 android/Gemfile eval
+gem "fastlane-plugin-firebase_app_distribution"

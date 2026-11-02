@@ -1,0 +1,2 @@
+# 应用包名（gradle 会自动读取，这里显式声明供 fastlane 使用）
+package_name("com.sera.tosleep")

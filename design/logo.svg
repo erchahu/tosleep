@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 108 108">
+  <!-- ToSleep logo: crescent moon + sparkle on night sky -->
+  <rect width="108" height="108" rx="24" fill="#0E0F26"/>
+  <path fill="#FFD97A" d="M83.7,56.6 A29.7,29.7 0 1,1 51.4,24.3 A23.1,23.1 0 0,0 83.7,56.6 Z"/>
+  <path fill="#B7AFFF" d="M70,25 l1.6,3.8 3.8,1.6 -3.8,1.6 -1.6,3.8 -1.6,-3.8 -3.8,-1.6 3.8,-1.6 Z"/>
+  <path fill="#7C6FE0" d="M63,44 l1,2.4 2.4,1 -2.4,1 -1,2.4 -1,-2.4 -2.4,-1 2.4,-1 Z"/>
+</svg>

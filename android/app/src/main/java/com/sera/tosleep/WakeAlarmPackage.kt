@@ -1,4 +1,4 @@
-package com.tosleep
+package com.sera.tosleep
 
 import com.facebook.react.ReactPackage
 import com.facebook.react.bridge.NativeModule

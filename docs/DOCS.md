@@ -2,7 +2,7 @@
 
 一款 Android 睡眠/专注 kiosk 应用：到设定时间自动锁定设备（kiosk 模式），倒计时或到关闭时间后自动解锁。支持每日定时、确认弹窗、有限次数的延迟（贪睡）、熄屏唤醒、开机自启动和用户自定义设置。
 
-- 包名：`com.tosleep`
+- 包名：`com.sera.tosleep`
 - 技术栈：React Native 0.88（Fabric/新架构）+ Kotlin 原生模块 + `react-native-kiosk-manager`
 
 ---
@@ -17,7 +17,7 @@
 - **必须将应用设为 device owner**，否则系统会弹"确认固定"对话框，且无法静默锁定：
 
   ```bash
-  adb shell dpm set-device-owner 'com.tosleep/com.riuhou.kioskmanager.DeviceAdminReceiver'
+  adb shell dpm set-device-owner 'com.sera.tosleep/com.riuhou.kioskmanager.DeviceAdminReceiver'
   ```
 
   ⚠️ 注意组件类名是 `com.riuhou.kioskmanager.DeviceAdminReceiver`（库的真实命名空间），不是 `com.kioskmanager`。用错类名会出现 "already an admin / Not active admin" 的矛盾报错。
@@ -37,7 +37,7 @@
 
 **问题**：熄屏后 Android 会暂停 RN 的 JS 定时器（activity 进入 onPause 生命周期），纯 JS 无法在熄屏时触发任何逻辑。另外老式唤醒锁（`SCREEN_BRIGHT_WAKE_LOCK` + `ACQUIRE_CAUSES_WAKEUP`）在 Android 14+ 已失效。
 
-**方案**（自研原生模块，位于 `android/app/src/main/java/com/tosleep/`）：
+**方案**（自研原生模块，位于 `android/app/src/main/java/com/sera/tosleep/`）：
 
 | 文件 | 职责 |
 |---|---|
@@ -50,7 +50,7 @@
 - 精确闹钟权限（Android 14+ 需要授权，否则自动降级为非精确闹钟，Doze 下可能延迟数分钟）：
 
   ```bash
-  adb shell appops set com.tosleep SCHEDULE_EXACT_ALARM allow
+  adb shell appops set com.sera.tosleep SCHEDULE_EXACT_ALARM allow
   ```
 
 - ⚠️ `PendingIntent` 必须显式指定 receiver 类（`Intent(context, WakeAlarmReceiver::class.java)`）。若用隐式 action 而 receiver 又没配 intent-filter，闹钟触发后无人接收。
@@ -96,10 +96,10 @@ yarn android --port 8088   # 构建安装并启动 Metro
 
 ```bash
 # 1. 设为 device owner（安装后、首次启动前执行）
-adb shell dpm set-device-owner 'com.tosleep/com.riuhou.kioskmanager.DeviceAdminReceiver'
+adb shell dpm set-device-owner 'com.sera.tosleep/com.riuhou.kioskmanager.DeviceAdminReceiver'
 
 # 2. 授予精确闹钟权限
-adb shell appops set com.tosleep SCHEDULE_EXACT_ALARM allow
+adb shell appops set com.sera.tosleep SCHEDULE_EXACT_ALARM allow
 ```
 
 ### Release 构建
@@ -131,8 +131,8 @@ cd android && ./gradlew assembleRelease
 | 文件 | 说明 |
 |---|---|
 | `App.tsx` | 全部 UI 与调度逻辑（定时轮询、弹窗、延迟、设置、倒计时） |
-| `android/app/src/main/java/com/tosleep/WakeAlarmModule.kt` | 原生闹钟 + 设置持久化 |
-| `android/app/src/main/java/com/tosleep/WakeAlarmReceiver.kt` | 闹钟触发拉起 App |
-| `android/app/src/main/java/com/tosleep/WakeAlarmPackage.kt` | 原生包注册 |
+| `android/app/src/main/java/com/sera/tosleep/WakeAlarmModule.kt` | 原生闹钟 + 设置持久化 |
+| `android/app/src/main/java/com/sera/tosleep/WakeAlarmReceiver.kt` | 闹钟触发拉起 App |
+| `android/app/src/main/java/com/sera/tosleep/WakeAlarmPackage.kt` | 原生包注册 |
 | `android/app/src/main/AndroidManifest.xml` | WAKE_LOCK 权限、turnScreenOn/showWhenLocked、receiver |
 | `node_modules/react-native-kiosk-manager/` | kiosk 能力库（含本地补丁，见"已知坑"） |

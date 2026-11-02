@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "420535907720",
+    "project_id": "tosleep-4bd59",
+    "storage_bucket": "tosleep-4bd59.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:420535907720:android:9b80fed2ce6ed6df8e363d",
+        "android_client_info": {
+          "package_name": "com.sera.tosleep"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfNT8L8rGmyFzt5IgUeJHW2Am-covymB8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

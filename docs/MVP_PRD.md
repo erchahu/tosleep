@@ -2,7 +2,7 @@
 
 - 版本：v0.1（2026-11-02）
 - 平台：Android（React Native 0.88 + Kotlin 原生模块）
-- 包名：`com.tosleep`
+- 包名：`com.sera.tosleep`
 - 状态：核心功能已在代码中实现（见 [DOCS.md](../DOCS.md)），本文档定义 MVP 的范围、验收标准与上线前必须补齐的缺口
 
 ---
@@ -92,12 +92,12 @@ MVP 上线/演示前，目标设备必须完成：
 
 1. **Device owner 配置**（一次性，安装后执行）：
    ```bash
-   adb shell dpm set-device-owner 'com.tosleep/com.riuhou.kioskmanager.DeviceAdminReceiver'
+   adb shell dpm set-device-owner 'com.sera.tosleep/com.riuhou.kioskmanager.DeviceAdminReceiver'
    ```
    未配置时 `startKiosk()` 会弹系统确认框，且无法静默拉起 App，US1/US3 大部分验收项不成立。
 2. **精确闹钟权限**（Android 14+）：
    ```bash
-   adb shell appops set com.tosleep SCHEDULE_EXACT_ALARM allow
+   adb shell appops set com.sera.tosleep SCHEDULE_EXACT_ALARM allow
    ```
 3. **发行包**：面向真实用户分发时无法预配 device owner（需 ADB），MVP 的现实交付形态是**指导用户自行 ADB 配置**（见六、风险）。
 

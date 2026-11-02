@@ -146,7 +146,7 @@ function AppContent() {
   const triggerConfirm = useCallback(() => {
     console.log('[schedule] TRIGGERED, waking up and showing confirm modal');
     KioskManager.wakeUpScreen();
-    KioskManager.launchApp('com.tosleep'); // device owner，可从后台把 app 切回前台
+    KioskManager.launchApp('com.sera.tosleep'); // device owner，可从后台把 app 切回前台
     setAutoTriggered(true);
     setConfirmVisible(true);
   }, []);

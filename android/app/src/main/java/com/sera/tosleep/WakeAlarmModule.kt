@@ -1,4 +1,4 @@
-package com.tosleep
+package com.sera.tosleep
 
 import android.app.AlarmManager
 import android.content.Context

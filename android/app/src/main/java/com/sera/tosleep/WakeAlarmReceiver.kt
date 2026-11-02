@@ -1,4 +1,4 @@
-package com.tosleep
+package com.sera.tosleep
 
 import android.content.BroadcastReceiver
 import android.content.Context

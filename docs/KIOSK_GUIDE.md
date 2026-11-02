@@ -36,13 +36,13 @@ Android 提供的底层 API 是 `Activity.startLockTask()`，本项目通过 `re
 adb install app-debug.apk
 
 # 2. 设置 device owner（在首次启动 app 之前执行）
-adb shell dpm set-device-owner 'com.tosleep/com.riuhou.kioskmanager.DeviceAdminReceiver'
+adb shell dpm set-device-owner 'com.sera.tosleep/com.riuhou.kioskmanager.DeviceAdminReceiver'
 ```
 
 成功会输出：
 
 ```
-Success: Device owner set to package com.tosleep/com.riuhou.kioskmanager.DeviceAdminReceiver
+Success: Device owner set to package com.sera.tosleep/com.riuhou.kioskmanager.DeviceAdminReceiver
 ```
 
 ### 2.2 常见报错与解决
@@ -137,7 +137,7 @@ const startSession = useCallback(() => {
 ## 4. 锁定状态下的注意事项
 
 - **锁定期间 App 必须保持可用**：如果 App 崩溃或被杀，普通应用用户会卡在最后的画面（按 Home 无效）。debug 时可用 `adb shell input keyevent KEYCODE_HOME` 验证是否真的锁住。
-- **解锁兜底**：真机上如果被锁死，可用 adb 强制停止 kiosk：`adb shell am force-stop com.tosleep`（device owner 时不一定生效，此时重启设备或 `dpm remove-active-admin`）。
+- **解锁兜底**：真机上如果被锁死，可用 adb 强制停止 kiosk：`adb shell am force-stop com.sera.tosleep`（device owner 时不一定生效，此时重启设备或 `dpm remove-active-admin`）。
 - **屏幕常亮**：kiosk 场景建议锁定期间保持屏幕常亮（可用 `setTurnScreenOn` / wake lock，或让用户插电）。
 - **device owner 在重装后依然保留**：`adb install -r` 更新不需要重新执行 set-device-owner；只有卸载重装才需要。
 

@@ -15,6 +15,7 @@ const WakeAlarm = NativeModules.WakeAlarm as
   | {
       scheduleWake: (triggerAtMs: number) => void;
       cancelWake: () => void;
+      wakeUpScreen: () => void;
       getSettings: () => Promise<string | null>;
       setSettings: (json: string) => Promise<boolean>;
     }
@@ -145,7 +146,7 @@ function AppContent() {
   // 定时触发：先唤醒屏幕、把 app 拉回前台，再弹确认窗
   const triggerConfirm = useCallback(() => {
     console.log('[schedule] TRIGGERED, waking up and showing confirm modal');
-    KioskManager.wakeUpScreen();
+    WakeAlarm?.wakeUpScreen(); // 熄屏时点亮屏幕（亮屏状态下是 no-op）
     KioskManager.launchApp('com.sera.tosleep'); // device owner，可从后台把 app 切回前台
     setAutoTriggered(true);
     setConfirmVisible(true);

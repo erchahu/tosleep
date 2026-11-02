@@ -4,6 +4,7 @@ import android.app.AlarmManager
 import android.content.Context
 import android.content.Intent
 import android.app.PendingIntent
+import android.os.PowerManager
 import android.util.Log
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
@@ -52,6 +53,23 @@ class WakeAlarmModule(reactContext: ReactApplicationContext) :
     val am = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
     am.cancel(pendingIntent(context))
     Log.i("WakeAlarm", "alarm cancelled")
+  }
+
+  /** 点亮屏幕（熄屏时的闹钟触发路径使用；亮屏状态下为 no-op） */
+  @ReactMethod
+  fun wakeUpScreen() {
+    val pm = reactApplicationContext.getSystemService(Context.POWER_SERVICE) as PowerManager
+    if (pm.isInteractive) return
+    @Suppress("DEPRECATION")
+    val wakeLock = pm.newWakeLock(
+      PowerManager.SCREEN_BRIGHT_WAKE_LOCK
+        or PowerManager.ACQUIRE_CAUSES_WAKEUP
+        or PowerManager.ON_AFTER_RELEASE,
+      "tosleep:WakeUpScreen",
+    )
+    // 10 秒后自动释放，只负责点亮，不保持常亮
+    wakeLock.acquire(10_000L)
+    Log.i("WakeAlarm", "screen woken up")
   }
 
   /** 读取持久化的设置 JSON（每日开启/关闭时间等） */

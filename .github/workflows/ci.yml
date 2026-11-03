@@ -1,4 +1,4 @@
-name: React Native CI
+name: build-up android app
 
 on:
   push:

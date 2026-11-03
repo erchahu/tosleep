@@ -17,7 +17,7 @@ platform :android do
     UI.success("AAB:  app/build/outputs/bundle/release/app-release.aab")
   end
 
-  desc "构建并分发到 Firebase App Distribution（需 FIREBASE_TOKEN，[VIP] Tester 组）"
+  desc "构建并分发到 Firebase App Distribution（需 FIREBASE_TOKEN，[vip]-tester 组）"
   lane :distribute do |options|
     gradle(task: "assemble", build_type: "Release")
 
@@ -26,7 +26,7 @@ platform :android do
 
     firebase_app_distribution(
       app: FIREBASE_APP_ID,
-      groups: ENV["FIREBASE_GROUPS"] || "[VIP] Tester",
+      groups: ENV["FIREBASE_GROUPS"] || "[vip]-tester",
       release_notes: release_notes,
       firebase_cli_token: ENV["FIREBASE_TOKEN"]
     )

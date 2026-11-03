@@ -130,7 +130,7 @@ cd android && ./gradlew assembleRelease
 
 | 文件 | 说明 |
 |---|---|
-| `index.tsx` | 全部 UI 与调度逻辑（定时轮询、弹窗、延迟、设置、倒计时） |
+| `app/index.tsx` | 全部 UI 与调度逻辑（定时轮询、弹窗、延迟、设置、倒计时） |
 | `android/app/src/main/java/com/sera/tosleep/WakeAlarmModule.kt` | 原生闹钟 + 设置持久化 |
 | `android/app/src/main/java/com/sera/tosleep/WakeAlarmReceiver.kt` | 闹钟触发拉起 App |
 | `android/app/src/main/java/com/sera/tosleep/WakeAlarmPackage.kt` | 原生包注册 |

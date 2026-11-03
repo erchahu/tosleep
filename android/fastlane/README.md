@@ -29,7 +29,7 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 [bundle exec] fastlane android distribute
 ```
 
-构建并分发到 Firebase App Distribution（需 FIREBASE_TOKEN，[VIP] Tester 组）
+构建并分发到 Firebase App Distribution（需 FIREBASE_TOKEN，[vip]-tester 组）
 
 ----
 
